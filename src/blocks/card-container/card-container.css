@@ -1,0 +1,14 @@
+/* stylelint-disable selector-class-pattern */
+.card-container > ul {
+    list-style: none;
+    padding: 0;
+}
+
+.card-container > ul > li {
+    margin: unset;
+}
+
+/* Prevent authors from accidentally clicking on the card in UE */
+.adobe-ue-edit .nsw-card__title a::after {
+    display: none;
+}

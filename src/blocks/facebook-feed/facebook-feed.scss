@@ -1,0 +1,48 @@
+.facebook-feed{
+  .nsw-card{
+    .card-icon{
+      padding-right: inherit;
+      padding-top: 4px;
+      position: absolute;
+      right: 0;
+
+      svg{
+        path{
+          fill: var(--nsw-brand-dark);
+        }
+      }
+    }
+
+    &:hover{
+      cursor: pointer;
+
+      .card-icon{
+        svg{
+          path{
+            fill: var(--nsw-text-light);
+          }
+        }
+      }
+    }
+
+    
+
+    &__copy{
+      -webkit-box-orient: vertical;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      margin: 0;
+      max-height: 4.5em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 84%;      
+      
+      a{
+        color: inherit;
+        font-weight: inherit;
+        text-decoration: none;
+        @include pseudo-clickable-block;
+      }
+    }
+  }
+}

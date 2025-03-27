@@ -1,0 +1,37 @@
+.content-container{
+  ul{
+    padding: 0;
+    list-style-type: none;
+
+    li{
+      margin: 0;
+      padding: rem(8px) 0 rem(8px) rem(14px);
+      position: relative;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: rem(4px);
+        height: rem(4px);
+        border-radius: 100%;
+        background-color: var(--nsw-text-dark);
+        top: rem(18px);
+        left: 0;
+      }      
+    }
+  }
+
+  .nsw-section--invert & {    
+    a{
+      color: var(--nsw-link-light);
+    }
+
+    ul{
+      li{
+        &::before {
+          background-color: var(--nsw-text-light);
+        }
+      }
+    }
+  }
+}

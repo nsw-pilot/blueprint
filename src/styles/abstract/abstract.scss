@@ -1,0 +1,22 @@
+// Import the NSW Design System styles
+// Only abstracts are imported to prevent duplication of styles
+@import 'nsw-design-system/src/global/scss/settings/settings';
+
+// Base
+@import 'nsw-design-system/src/global/scss/base/functions';
+@import 'nsw-design-system/src/global/scss/base/mixins';
+
+// Settings
+@import './palette';
+@import './theme';
+
+// Helpers
+@import 'nsw-design-system/src/global/scss/helpers/utilities';
+
+// Core
+@import "./icon";
+@import "./layout";
+@import "./section";
+
+// Components
+@import "./buttons";

@@ -1,0 +1,52 @@
+.search-template main {
+    flex: 1;
+}
+
+.search-template .nsw-search-results ol{
+    padding: 0;
+    margin: 0;
+}
+
+.search-template .nsw-list-item__link {
+    font-size: 14px;
+    padding-top: 8px;
+}
+
+.search-template .nsw-form__input-group {
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
+} 
+
+@media (width >= 62rem) {
+    .search-template .nsw-form__input-group {
+        margin-bottom: 3rem;
+        margin-top: 3rem;
+    }
+}
+
+.search-template .error-message{
+    margin-top: 2rem;
+}
+
+@media (width >= 62rem) {
+    .search-template .error-message{
+        margin-top: 4rem !important;
+    }
+}
+
+.search-template  .searchlist-container h1{
+    padding-top: 1.5rem;
+}
+
+.search-template .nsw-search-results  .nsw-list-item:last-child {
+    margin-bottom: 2rem;
+}
+
+.search-template .nsw-search-results .nsw-list-item .nsw-list-item__copy{
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}

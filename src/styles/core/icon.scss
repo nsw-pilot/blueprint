@@ -1,0 +1,76 @@
+.nsw-material-icons, .icon {
+  @each $size, $variant in $nsw-icon-sizes {
+    &--#{"" + $size} {
+      font-size: rem(map-get($nsw-icon-sizes, $size));
+    }
+  }
+
+  @each $color, $variant in $nsw-icon-colors {
+    &--#{"" + $color} {
+      color: map-get($nsw-icon-colors, $color);
+    }
+  }
+
+  @each $angle, $variant in $nsw-icon-angles {
+    &--rotate-#{"" + $angle} {
+      transform: rotate(#{$angle}deg);
+    }
+  }
+
+  &--inline {
+    font-size: rem(map-get($nsw-icon-sizes, 20));
+    line-height: rem(10px);
+    position: relative;
+    bottom: rem(-5px);
+    margin-right: rem(4px);
+  }
+}
+
+.nsw-icon-button {
+  @include font-size('sm');
+  border-radius: var(--nsw-border-radius);
+  font-weight: var(--nsw-font-bold);
+  color: var(--nsw-brand-dark);
+  background: none;
+  border: 0;
+  text-decoration: none;
+  padding: rem(8px);
+  display: inline-block;
+
+  &:hover {
+    @include nsw-hover;
+    outline-width: 0;
+  }
+
+  &:focus {
+    @include nsw-focus($offset: false);
+  }
+
+  .nsw-material-icons,
+  svg {
+    display: block;
+  }
+
+  @at-root {
+    a#{&} {
+      cursor: pointer;
+    }
+  }
+
+  &--flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nsw-section--invert & {
+    @include link-light;
+  }
+}
+
+
+// Inject icon name into material icons using data attributes
+// This is to avoid universal editor from seeing text content and adding it as a text node
+.icon[data-icon]::before {
+  content: attr(data-icon);
+}

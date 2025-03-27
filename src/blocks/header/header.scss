@@ -1,0 +1,48 @@
+.nsw-header{
+  &__waratah{
+    img{
+      height: 46px;
+      width: 43px;
+    }
+  }  
+}
+
+header{
+  .nsw-main-nav__title{
+    >span{
+      display: block;
+      padding: rem(16px);
+    }
+  }
+}
+
+@media (width >= 992px){
+  .nsw-header{
+    &__waratah{
+      img{
+        height: 76px;
+        width: 70.8px;
+      }
+    }
+  }
+
+  header{
+    .nsw-main-nav__title{
+      >span{
+        padding: 0;
+      }
+    }
+  }
+}
+
+.nsw-masthead {
+  a {
+    color: var(--nsw-text-light);
+    text-decoration: none;
+    font-weight: normal;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

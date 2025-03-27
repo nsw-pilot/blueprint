@@ -1,0 +1,9 @@
+@import "nsw-design-system/src/components/link-list/link-list";
+
+.linklist{
+  span[data-icon="east"] {
+    font-size: 1.25rem;
+    margin-left: 1rem;
+    text-decoration: none;
+  }
+}

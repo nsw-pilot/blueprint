@@ -1,0 +1,42 @@
+.columns > div {
+  display: flex;
+  flex-direction: column;
+  gap: rem($grid-gutters);
+
+  > div {
+    order: 1;
+  }
+
+  > .columns-img-col {
+    order: 0;
+  }
+
+  > .columns-img-col img {
+    display: block;
+  } 
+
+  + div {
+    margin-top: rem($grid-gutters);
+  
+    @include breakpoint("md") {
+      margin-top: rem($grid-gutters * 4);
+    }
+  }
+
+  @include breakpoint("md") {
+    gap: rem($grid-gutters * 4);
+
+    align-items: center;
+    flex-direction: unset;
+
+    > div {
+      flex: 1;
+      order: unset;
+    }
+  }
+}
+
+.columns img {
+  width: 100%;
+}
+

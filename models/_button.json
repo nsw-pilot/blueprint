@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "Button",
+      "id": "button",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/button/v1/button",
+            "template": {
+              "model": "button",
+               "linkType": ""
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "button",
+      "fields": [
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link"
+        },
+        {
+          "component": "text",
+          "name": "linkText",
+          "label": "Text"
+        },
+        {
+          "component": "text",
+          "name": "linkTitle",
+          "label": "Alt Text"
+        },
+        {
+          "component": "select",
+          "name": "linkType",
+          "label": "Type",
+          "value": "",
+          "options": [
+            {
+              "name": "solid",
+              "value": ""
+            },
+            {
+              "name": "Outline",
+              "value": "primary"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

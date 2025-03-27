@@ -1,0 +1,162 @@
+@use "sass:map";
+
+@each $theme, $colors in $themes {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-#{$color}: #{$value};
+    }
+  }
+}
+
+@each $theme, $colors in $themes-rgb {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-#{$color}-rgb: #{$value};
+    }
+  }
+}
+
+@each $theme, $colors in $theme-state-colors {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-#{$color}: #{$value};
+    }
+  }
+}
+
+@each $theme, $colors in $themes-state-colors-rgb {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-#{$color}-rgb: #{$value};
+    }
+  }
+}
+
+@each $theme, $colors in $theme-text-colors {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-#{$color}: #{$value};
+    }
+  }
+}
+
+@each $theme, $colors in $theme-text-colors-rgb {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-#{$color}-rgb: #{$value};
+    }
+  }
+}
+
+@each $theme, $colors in $theme-semantic-colors {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-status-#{$color}: #{$value};
+    }
+  }
+}
+
+@each $theme, $colors in $theme-semantic-colors-rgb {
+  .theme-#{$theme} {
+    @each $color, $value in $colors {
+      --nsw-status-#{$color}-rgb: #{$value};
+    }
+  }
+}
+
+:root {
+  @each $color, $value in map.get($themes, "default") {
+    --nsw-#{$color}: #{$value};
+  }
+
+  @each $color, $value in map.get($themes-rgb, "default") {
+    --nsw-#{$color}-rgb: #{$value};
+  }
+
+  @each $color, $value in map.get($theme-state-colors, "default") {
+    --nsw-#{$color}: #{$value};
+  }
+
+  @each $color, $value in map.get($themes-state-colors-rgb, "default") {
+    --nsw-#{$color}-rgb: #{$value};
+  }
+
+  @each $color, $value in map.get($theme-text-colors, "default") {
+    --nsw-#{$color}: #{$value};
+  }
+
+  @each $color, $value in map.get($theme-text-colors-rgb, "default") {
+    --nsw-#{$color}-rgb: #{$value};
+  }
+
+  @each $color, $value in map.get($theme-semantic-colors, "default") {
+    --nsw-status-#{$color}: #{$value};
+  }
+
+  @each $color, $value in map.get($theme-semantic-colors-rgb, "default") {
+    --nsw-status-#{$color}-rgb: #{$value};
+  }
+
+  /* Deprecated */
+  --nsw-text-hover: var(--nsw-hover);
+  --nsw-text-hover-light: var(--nsw-hover-light);
+  --nsw-text-link: var(--nsw-link);
+  --nsw-text-link-hover: var(--nsw-hover);
+  --nsw-text-link-hover-light: var(--nsw-hover-light);
+  --nsw-text-visited: var(--nsw-visited);
+
+  /* Font */
+  --nsw-font-family: "Public Sans", sans-serif;
+  --nsw-font-size: 16px;
+  --nsw-line-height: 1.5;
+  --nsw-font-normal: 400;
+  --nsw-font-bold: 700;
+
+  --nsw-font-size-xxs-mobile: #{rem(12px)};
+  --nsw-font-size-xxs-desktop: #{rem(12px)};
+  --nsw-line-height-xxs-mobile: 1.5;
+  --nsw-line-height-xxs-desktop: 1.5;
+
+  --nsw-font-size-xs-mobile: #{rem(14px)};
+  --nsw-font-size-xs-desktop: #{rem(14px)};
+  --nsw-line-height-xs-mobile: 1.35;
+  --nsw-line-height-xs-desktop: 1.35;
+
+  --nsw-font-size-sm-mobile: #{rem(16px)};
+  --nsw-font-size-sm-desktop: #{rem(16px)};
+  --nsw-line-height-sm-mobile: 1.5;
+  --nsw-line-height-sm-desktop: 1.5;
+
+  --nsw-font-size-md-mobile: #{rem(18px)};
+  --nsw-font-size-md-desktop: #{rem(20px)};
+  --nsw-line-height-md-mobile: 1.33;
+  --nsw-line-height-md-desktop: 1.4;
+
+  --nsw-font-size-lg-mobile: #{rem(22px)};
+  --nsw-font-size-lg-desktop: #{rem(24px)};
+  --nsw-line-height-lg-mobile: 1.25;
+  --nsw-line-height-lg-desktop: 1.33;
+
+  --nsw-font-size-xl-mobile: #{rem(28px)};
+  --nsw-font-size-xl-desktop: #{rem(32px)};
+  --nsw-line-height-xl-mobile: 1.25;
+  --nsw-line-height-xl-desktop: 1.25;
+
+  --nsw-font-size-xxl-mobile: #{rem(36px)};
+  --nsw-font-size-xxl-desktop: #{rem(48px)};
+  --nsw-line-height-xxl-mobile: 1.25;
+  --nsw-line-height-xxl-desktop: 1.25;
+
+  /* Borders */
+  --nsw-border-width: 1px;
+  --nsw-border-style: solid;
+  --nsw-border-color: var(--nsw-brand-accent);
+  --nsw-border-radius: #{rem(4px)};
+
+  /* Shadows */
+  --nsw-box-shadow: 0 #{rem(4px)} #{rem(12px)} 0
+    rgba(var(--nsw-black-rgb), 0.15);
+
+  /* Maximum width of container */
+  --nsw-container-width: #{rem(1200px)};
+}

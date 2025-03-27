@@ -1,0 +1,71 @@
+{
+  "definitions": [
+    {
+      "title": "Section",
+      "id": "section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "model": "section"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "section",
+      "fields": [
+        {
+          "component": "select",
+          "name": "style",
+          "label": "Style",
+          "options": [
+            {
+              "name": "Default",
+              "value": ""
+            },
+            {
+              "name": "Dark",
+              "value": "nsw-section--brand-dark"
+            },
+            {
+              "name": "Light",
+              "value": "nsw-section--brand-light"
+            },
+            {
+              "name": "Supplementary",
+              "value": "nsw-section--brand-supplementary"
+            },
+            {
+              "name": "Off White",
+              "value": "nsw-section--off-white"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "section",
+      "components": [
+        "text",
+        "image",
+        "button",
+        "title",
+        "hero",
+        "cards",
+        "columns",
+        "fragment",
+        "embed",
+        "fbtimeline",
+        "callout",
+        "contentblocks"
+      ]
+    }
+  ]
+}

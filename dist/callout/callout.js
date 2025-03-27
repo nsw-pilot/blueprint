@@ -1,0 +1,2 @@
+import{m}from"../chunks/main-DgXrYfkD.js";import"../chunks/aem-CkpPMh2a.js";function p(o){o.classList.add("nsw-callout");const n=document.createElement("div");n.className="nsw-callout__content";const[r,a]=Array.from(o.children),[t,c]=[r,a].map(e=>e.children[0]);Array.from(t.children).forEach(e=>{e.nodeType===1&&(e.classList.add("nsw-h4"),m(t,e)),n.append(e)}),r.remove(),Array.from(c.children).forEach(e=>{e.nodeType===1&&m(c,e),n.append(e)}),a.remove(),o.append(n)}export{p as default};
+//# sourceMappingURL=callout.js.map

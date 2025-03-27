@@ -1,0 +1,82 @@
+/* stylelint-disable import-notation */
+// Base
+@import "nsw-design-system/src/global/scss/base/global";
+
+// Settings
+@import "./settings/theme";
+@import "./settings/palette";
+
+// Helpers
+//@import 'nsw-design-system/src/global/scss/helpers/list';
+//@import 'nsw-design-system/src/global/scss/helpers/text';
+//@import 'nsw-design-system/src/global/scss/helpers/spacing';
+@import 'nsw-design-system/src/global/scss/helpers/vertical-rule';
+@import 'nsw-design-system/src/global/scss/helpers/visibility';
+@import 'nsw-design-system/src/global/scss/helpers/api';
+
+// Core
+@import "./core/grid";
+@import "./core/icon";
+@import "./core/layout";
+@import "./core/section";
+@import "./core/typography";
+
+// Components
+@import "./core/buttons";
+
+// Templates
+@import "./templates";
+@import "./core/linklist";
+
+:root {
+  --desktop-nav-height: 206px;
+  --mobile-nav-height: 206px;
+}
+
+// Rough calculation of the estimated header height
+$mastheadHeight: calc(var(--nsw-font-size-xxs-desktop) * var(--nsw-line-height-xxs-desktop) + rem(16px));
+$header: calc(rem(76px) + rem(40));
+$navbar: calc(var(--nsw-font-size-sm-desktop) * var(--nsw-line-height-sm-desktop) + rem(32px));
+
+$header-mobile: calc(rem(55px - 7px) + rem(24px) + var(--nsw-font-size-lg-mobile) * var(--nsw-line-height-lg-mobile) + rem(24px));
+
+// Rough calculation of the estimated breadcrumb height
+$breadcrumbHeightDesktop: calc(var(--nsw-font-size-xs-desktop) * var(--nsw-line-height-xs-desktop) + rem(16px));
+$breadcrumbHeightMobile: calc(var(--nsw-font-size-xs-mobile) * var(--nsw-line-height-xs-mobile) + rem(12px));
+
+header {
+  min-height: calc($mastheadHeight + $header-mobile);
+
+  @include breakpoint($nsw-desktop-breakpoint) {
+    min-height: calc($mastheadHeight + $header + $navbar);
+  }
+}
+
+.breadcrumb{
+  min-height: $breadcrumbHeightMobile;
+
+  @include breakpoint($nsw-desktop-breakpoint) {
+    min-height: $breadcrumbHeightDesktop;
+  }
+}
+
+header .header,
+footer .footer {
+  visibility: hidden;
+}
+
+header .header[data-block-status="loaded"],
+footer .footer[data-block-status="loaded"] {
+  visibility: visible;
+}
+
+.display-none {
+  display: none;
+}
+
+// Ensure images are responsive
+.default-content-wrapper img, .columns-img-col img, .columns img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}

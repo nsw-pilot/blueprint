@@ -1,0 +1,16 @@
+.breadcrumb {
+    padding: 0;
+    margin: 0;
+
+    .nsw-breadcrumbs {
+        padding: 0 0 0.25rem;
+    }
+}
+
+@include breakpoint('md')  {
+    .breadcrumb {
+        .nsw-breadcrumbs {
+            padding: 0 0 0.5rem;
+        }
+    }
+}

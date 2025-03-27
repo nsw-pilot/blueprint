@@ -1,0 +1,136 @@
+{
+  "definitions": [
+    {
+      "title": "Card container",
+      "id": "cards",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Card container",
+              "filter": "cards",
+              "model": "cards"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Card",
+      "id": "card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Card",
+              "model": "card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "cards",
+      "fields": [
+        {
+          "component": "multiselect",
+          "name": "classes",
+          "label": "Card Style",
+          "description": "The card style",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Theme",
+              "children": [
+                {
+                  "name": "White",
+                  "value": "white"
+                },
+                {
+                  "name": "Light",
+                  "value": "Light"
+                },
+                {
+                  "name": "Dark",
+                  "value": "dark"
+                }
+              ]
+            },
+            {
+              "name": "Orientation",
+              "children": [
+                {
+                  "name": "Horizontal",
+                  "value": "horizontal"
+                },
+                {
+                  "name": "Vertical",
+                  "value": "vertical"
+                }
+              ]
+            },
+            {
+              "name": "Highlight",
+              "children": [
+                {
+                  "name": "Highlight",
+                  "value": "highlight"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "card",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "linkText",
+          "value": "",
+          "label": "Title",
+          "valueType": "string",
+          "required": true
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "value": "",
+          "label": "Link",
+          "valueType": "string",
+          "validation" : {
+            "rootPath": "/content/doe/sws/schools"
+          },
+          "required": true
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Text",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "cards",
+      "components": [
+        "card"
+      ]
+    }
+  ]
+}

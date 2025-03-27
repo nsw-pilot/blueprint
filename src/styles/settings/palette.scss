@@ -1,0 +1,9 @@
+:root {
+  @each $color, $value in $brand-colors {
+    --nsw-palette-#{$color}: #{$value};
+  }
+
+  @each $color, $value in $brand-colors-rgb {
+    --nsw-palette-#{$color}-rgb: #{$value};
+  }
+}

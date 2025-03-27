@@ -1,0 +1,75 @@
+.nsw-section {
+  padding: rem($grid-gutters * 2) 0;
+
+  .icon{
+    svg, path{
+      fill: var(--nsw-text-dark);
+    }
+  }
+  
+
+  @include breakpoint('md') {
+    padding: rem($grid-gutters * 4) 0;
+  }
+
+  &--half-padding {
+    padding: 0;
+
+    @include breakpoint('md') {
+      padding: rem($grid-gutters * 2) 0;
+    }
+  }
+
+  &--no-padding {
+    padding: 0;
+
+    @include breakpoint('md') {
+      padding: 0;
+    }
+  }
+
+  &--image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 0;
+
+    @include breakpoint('md') {
+      padding: rem($grid-gutters * 4) 0;
+    }
+  }
+
+  &--box {
+    border-radius: var(--nsw-border-radius);
+    border: 1px solid var(--nsw-grey-04);
+    padding: rem(24px);
+
+    @include breakpoint('md') {
+      padding: rem(24px);
+    }
+  }
+
+  @each $name, $variant in $nsw-sections {
+    &--#{"" + $name} {
+      --nsw-section-bg: #{map-get($variant, background)};
+
+      background-color: map-get($variant, background);
+      color: map-get($variant, color);
+
+      .icon{
+        svg, path{
+          fill: map-get($variant, color);
+        }
+      }
+    }
+  }
+
+  &--invert {
+    color: var(--nsw-text-light);
+  }
+}
+
+.section > [class$="-wrapper"] {
+  @include component-spacing();
+}
+

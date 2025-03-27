@@ -1,0 +1,232 @@
+$footer-logo-cta-width: rem(81px);
+
+footer {
+    background-color: var(--nsw-brand-dark);
+    color: var(--nsw-text-light);
+
+    .nsw-section{
+        .material-icons {
+            color: var(--nsw-text-light);
+        }
+    
+        .icon {
+            svg,
+            path {
+                fill: var(--nsw-text-light);
+            }
+        }
+    }
+    
+}
+
+footer .footer {
+    .nsw-section {
+        padding: 0;
+    }
+
+    .icon {
+        img {
+            height: inherit;
+            width: inherit;
+        }
+    }
+
+    .footer__container {
+        display: grid;
+        margin: auto;
+        max-width: var(--nsw-container-width);
+        padding: rem(16px) rem(16px) rem(33px);
+        row-gap: rem(20px);
+    }
+
+    .footer__section > div {
+        display: grid;
+        padding: 0;
+        row-gap: rem(20px);
+    }
+
+    ul,
+    li,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    p,
+    a {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        list-style: none;
+
+        li {
+            display: flex;
+            gap: rem(24px);
+        }
+    }
+
+    a:hover {
+        background-color: var(--nsw-hover-light);
+        outline-color: var(--nsw-hover-light);
+    }
+
+    .footer__section--school-info {
+        .default-content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
+
+            img{
+                max-width: rem(130px);
+                max-height: rem(150px);
+            }
+        }
+
+        h3 {
+            grid-column: 1;
+            grid-row: 1;
+            margin: 0;
+        }
+
+        p:has(img) {
+            grid-column: 1;
+            grid-row: 2;
+            margin: 0;
+            width: max-content;
+        }
+    }
+
+    .footer__section--contact-us {
+        .content-group {
+            display: grid;
+            row-gap: rem(20px);
+        }
+
+        .default-content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+        ul {
+            display: grid;
+            row-gap: rem(20px);
+        }
+
+        a,
+        a:visited {
+            color: var(--nsw-text-light);
+        }
+    }
+
+    .footer__section--acknowledgement {
+        border-bottom: 1px solid var(--nsw-white);
+        padding-bottom: rem(20px);
+    }
+
+    .footer__section--links {
+        ul {
+            display: grid;
+            row-gap: rem(16px);
+        }
+
+        a {
+            font-size: var(--nsw-font-size-xs);
+            height: fit-content;
+        }
+
+        a,
+        a:visited {
+            color: var(--nsw-text-light);
+        }
+    }
+}
+
+@include breakpoint('md') {
+    footer .footer {
+        .footer__container {
+            padding-bottom: rem(32px);
+            padding-top: rem(32px);
+            row-gap: rem(16px);
+        }
+
+        .footer__section--acknowledgement {
+            padding-bottom: rem(16px);
+        }
+
+        .footer__section--school-info {
+            .default-content-wrapper {
+                align-items: end;
+                grid-template-columns: 1fr auto;
+                grid-template-rows: auto;
+                position: relative;
+            }
+
+            h3 {
+                align-self: start;
+                grid-column: 1;
+            }
+
+            p {
+                align-self: end;
+                grid-column: 2;
+                margin-top: rem(24px);
+                position: absolute;
+                right: 0;
+                top: 0;
+            }
+        }
+
+        .footer__section--contact-us {
+            padding-bottom: rem(16px);
+
+            .default-content-wrapper {
+                align-items: start;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 0fr));
+                gap: rem(32px);
+            }
+        }
+
+        .footer__section--links {
+            .default-content-wrapper {
+                gap: rem(32px);
+                grid-template-columns: $footer-logo-cta-width 1fr;
+            }
+
+            a {
+                width: min-content;
+            }
+
+            ul {
+                column-gap: rem(44px);
+                display: flex;
+                flex-wrap: wrap;
+                margin: 0;
+                margin-left: auto;
+                max-width: rem(857px);
+                order: 2;
+                padding-bottom: rem(8px);
+                padding-top: rem(8px);
+
+                li {
+                    display: inline-flex;
+                }
+
+                a {
+                    display: flex;
+                    max-width: rem(110px);
+                    white-space: break-spaces;
+                    word-wrap: break-word;
+                }
+            }
+
+            .footer__logo-cta {
+                height: 88px;
+                order: 1;
+                width: $footer-logo-cta-width;
+            }
+        }
+    }
+}

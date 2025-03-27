@@ -1,0 +1,206 @@
+@use "sass:color";
+@use "sass:map";
+
+// Themes to colours mapping
+$themes: (
+  "default": (
+    "brand-dark": $blue-01,
+    "brand-light": $blue-04,
+    "brand-supplementary": $blue-02,
+    "brand-accent": $red-02,
+  ),
+  "navy-river-horizon": (
+    "brand-dark": $blue-01,
+    "brand-light": $blue-04,
+    "brand-supplementary": $blue-02,
+    "brand-accent": $red-02,
+  ),
+  "burgundy-tide": (
+    "brand-dark": $red-01,
+    "brand-light": $red-04,
+    "brand-supplementary": $grey-700,
+    "brand-accent": $red-02,
+  ),
+  "twilight-maroon": (
+    "brand-dark": $red-01,
+    "brand-light": $red-04,
+    "brand-supplementary": $black,
+    "brand-accent": $blue-04,
+  ),
+  "emerald-canopy": (
+    "brand-dark": $green-01,
+    "brand-light": $green-04,
+    "brand-supplementary": $green-02,
+    "brand-accent": $yellow-02,
+  )
+);
+
+$themes-rgb: ();
+
+@each $theme, $colors in $themes {
+  $themes-rgb: map.set(
+    $themes-rgb,
+    $theme,
+    map-loop($colors, to-rgb, "$value")
+  );
+}
+
+// generate theme state colours from theme colours
+$theme-state-colors: ();
+
+@each $theme, $colors in $themes {
+  $theme-state-colors: map.set(
+    $theme-state-colors,
+    $theme,
+    (
+      "link": map.get($colors, "brand-dark"),
+      "link-light": tint(map.get($colors, "brand-dark"), 90%),
+      "visited":
+        a11y-color(
+          lighten(
+            desaturate(adjust-hue(map.get($colors, "brand-dark"), 54), 31.52),
+            12.75
+          ),
+          #fff
+        ),
+      "focus": lighten(adjust-hue(map.get($colors, "brand-dark"), -22), 15.49),
+      "disabled": tint(map.get($colors, "brand-dark"), 50%),
+      "black": $black,
+      "grey-01": $grey-01,
+      "grey-02": $grey-02,
+      "grey-03": $grey-03,
+      "grey-04": $grey-04,
+      "off-white": $grey-50,
+      "white": $white,
+    )
+  );
+
+  $theme-state-colors: map.set(
+    $theme-state-colors,
+    $theme,
+    map.merge(
+      map.get($theme-state-colors, $theme),
+      (
+        "visited-light":
+          tint(map.get(map.get($theme-state-colors, $theme), "visited"), 80%),
+        "hover":
+          color.adjust(
+            map.get(map.get($theme-state-colors, $theme), "link"),
+            $alpha: -0.9
+          ),
+        "hover-light":
+          color.adjust(
+            map.get(map.get($theme-state-colors, $theme), "link-light"),
+            $alpha: -0.9
+          ),
+        "active":
+          color.adjust(
+            map.get(map.get($theme-state-colors, $theme), "link"),
+            $alpha: -0.8
+          ),
+        "active-light":
+          color.adjust(
+            map.get(map.get($theme-state-colors, $theme), "link-light"),
+            $alpha: -0.8
+          ),
+        "focus-light":
+          tint(map.get(map.get($theme-state-colors, $theme), "focus"), 80%),
+      )
+    )
+  );
+}
+
+$themes-state-colors-rgb: ();
+
+@each $theme, $colors in $theme-state-colors {
+  $themes-state-colors-rgb: map.set(
+    $themes-state-colors-rgb,
+    $theme,
+    map-loop($colors, to-rgb, "$value")
+  );
+}
+
+$theme-text-colors: (
+  "default": (
+    "text-dark": $grey-01,
+    "text-light": $white,
+  ),
+  "navy-river-horizon": (
+    "text-dark": $grey-01,
+    "text-light": $white,
+  ),
+);
+
+$theme-text-colors-rgb: ();
+
+@each $theme, $colors in $theme-text-colors {
+  $theme-text-colors-rgb: map.set(
+    $theme-text-colors-rgb,
+    $theme,
+    map-loop($colors, to-rgb, "$value")
+  );
+}
+
+$theme-semantic-colors: (
+  "default": (
+    "success": #008a07,
+    "success-bg": #e5f6e6,
+    "info": #2e5299,
+    "info-bg": #eaedf4,
+    "warning": #c95000,
+    "warning-bg": #fbeee5,
+    "error": #b81237,
+    "error-bg": #f7e7eb,
+  ),
+  "navy-river-horizon": (
+    "success": #008a07,
+    "success-bg": #e5f6e6,
+    "info": #2e5299,
+    "info-bg": #eaedf4,
+    "warning": #c95000,
+    "warning-bg": #fbeee5,
+    "error": #b81237,
+    "error-bg": #f7e7eb,
+  ),
+  "burgundy-tide": (
+    "success": #008a07,
+    "success-bg": #e5f6e6,
+    "info": #2e5299,
+    "info-bg": #eaedf4,
+    "warning": #c95000,
+    "warning-bg": #fbeee5,
+    "error": #b81237,
+    "error-bg": #f7e7eb,
+  ),
+  "twilight-maroon": (
+    "success": #008a07,
+    "success-bg": #e5f6e6,
+    "info": #2e5299,
+    "info-bg": #eaedf4,
+    "warning": #c95000,
+    "warning-bg": #fbeee5,
+    "error": #b81237,
+    "error-bg": #f7e7eb,
+  ),
+  "emerald-canopy": (
+    "success": #008a07,
+    "success-bg": #e5f6e6,
+    "info": #2e5299,
+    "info-bg": #eaedf4,
+    "warning": #c95000,
+    "warning-bg": #fbeee5,
+    "error": #b81237,
+    "error-bg": #f7e7eb,
+  ),
+);
+
+$theme-semantic-colors-rgb: ();
+
+@each $theme, $colors in $theme-semantic-colors {
+  $theme-semantic-colors-rgb: map.set(
+    $theme-semantic-colors-rgb,
+    $theme,
+    map-loop($colors, to-rgb, "$value")
+  );
+}
+

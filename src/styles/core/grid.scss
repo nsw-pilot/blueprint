@@ -1,0 +1,54 @@
+@use "sass:math";
+
+/*
+ * Instead of creating a 'nsw-container' wrapper, we automatically
+ * wrap the children
+ */
+.nsw-container,
+.nsw-section > div {
+  @include container;
+
+  &--flush {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.nsw-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: rem($grid-gutters);
+
+  @include breakpoint("md") {
+    gap: rem($grid-gutters * 4);
+  }
+
+  &--spaced {
+    row-gap: rem($grid-gutters * 4);
+
+    @include breakpoint("md") {
+      row-gap: rem($grid-gutters * 8);
+      column-gap: rem($grid-gutters * 4);
+    }
+  }
+}
+
+.nsw-col {
+  grid-column: span 12;
+
+  @for $i from 1 through 12 {
+    &-#{$i} {
+      grid-column: span $i;
+    }
+  }
+
+  @each $breakpoint, $breakpoint-size in $nsw-breakpoints {
+    @include breakpoint($breakpoint) {
+      @for $i from 1 through 12 {
+        &-#{$breakpoint}-#{$i} {
+          grid-column: span $i;
+        }
+      }
+    }
+  }
+}

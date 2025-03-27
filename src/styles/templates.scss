@@ -1,0 +1,46 @@
+.page-template {
+  $colored-section-classes: ();
+
+  @each $name, $variant in $nsw-sections {
+    @if $name != "white" {
+      $colored-section-classes: append(
+        $colored-section-classes,
+        ".nsw-section--#{$name}",
+        comma
+      );
+    }
+  }
+
+  $section-classes: append(
+    $colored-section-classes,
+    ".nsw-section--white",
+    comma
+  );
+
+  // Add vertical spacing between adjacent colored sections
+  // White sections don't need spacing when touching colored sections since the page template background
+  // naturally creates visual separation between section content
+  .section:is(#{$section-classes}) + .section:is(#{$colored-section-classes}) {
+    @include component-spacing();
+  }
+
+  // First non-coloured section doesn't have a top margin
+  .section:first-child:not(#{$colored-section-classes}) {
+    padding-block-start: unset;
+  }
+
+  .nsw-section {
+    // Clear the container wrapping
+    > div {
+      padding: unset;
+    }
+
+    &:is(#{$section-classes}) [class$="-wrapper"] {
+      padding: 0 1rem;
+
+      @include breakpoint("md") {
+        padding: 0 2rem;
+      }
+    }
+  }
+}
