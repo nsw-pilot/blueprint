@@ -16,7 +16,7 @@ class Generator extends LitElement {
   render() {
     return html`
       <div class="main-container">
-        <h1>Generate Sites from Template</h1>
+        <h1>Create your site</h1>
       </div>
     `;
   }

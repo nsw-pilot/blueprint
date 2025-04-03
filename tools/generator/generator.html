@@ -3,11 +3,8 @@
 <head>
   <title>DA App SDK Sample</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="icon" href="data:,">
   <link rel="stylesheet" href="https://da.live/nx/styles/nexter.css">
   <link rel="stylesheet" href="/tools/generator/index.css">
-
-
   <script type="importmap">
     {
       "imports": {
@@ -15,13 +12,18 @@
       }
     }
   </script>
-
-  <!-- Import DA App SDK -->
   <script src="https://da.live/nx/utils/sdk.js" type="module"></script>
-  <!-- Project App Logic -->
   <script src="/tools/generator/generator.js" type="module"></script>
+  <link rel="icon" href="data:,">
 </head>
 <body>
-  <da-generator></da-generator>
+  <main>
+    <picture>
+      <source type="image/webp" srcset="https://main--blueprint--nsw-pilot.aem.page/media_1281bc5b11f445054fed172b52f66f6c982594e0f.jpeg?width=2000&#x26;format=webply&#x26;optimize=medium" media="(min-width: 600px)">
+      <source type="image/webp" srcset="https://main--blueprint--nsw-pilot.aem.page/media_1281bc5b11f445054fed172b52f66f6c982594e0f.jpeg?width=750&#x26;format=webply&#x26;optimize=medium">
+      <img loading="lazy" alt="" src="https://main--blueprint--nsw-pilot.aem.page/media_1281bc5b11f445054fed172b52f66f6c982594e0f.jpeg?width=750&#x26;format=jpeg&#x26;optimize=medium" width="2048" height="1152">
+    </picture>
+    <da-generator></da-generator>
+  </main>
 </body>
 </html>
