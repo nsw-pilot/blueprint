@@ -1,9 +1,6 @@
-/* eslint-disable import/no-unresolved */
 import 'https://da.live/nx/public/sl/components.js';
 import getStyle from 'https://da.live/nx/utils/styles.js';
-import {
-  LitElement, html,
-} from 'da-lit';
+import { LitElement, html } from 'da-lit';
 
 const style = await getStyle(import.meta.url);
 
