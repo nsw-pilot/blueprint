@@ -59,9 +59,10 @@ async function replaceTemplate(data) {
 
   // update index
   const formData = new FormData();
-  formData.set('data', templatedText);
+  const blob = new Blob([templatedText], { type: 'text/html' });
+  formData.set('data', blob);
   const updateRes = await fetch(`https://admin.da.live/source/${ORG}/${data['school-name']}/index.html`, {
-    method: 'POST',
+    method: 'PUT',
     body: formData,
   });
   if (!updateRes.ok) {
