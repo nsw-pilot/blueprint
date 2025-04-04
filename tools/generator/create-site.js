@@ -1,6 +1,7 @@
 const ORG = 'nsw-pilot';
 const BLUEPRINT = 'blueprint';
 const COPY_FROM = `/${ORG}/${BLUEPRINT}/`;
+import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 
 async function copyContent(data) {
   const formData = new FormData();
@@ -16,10 +17,13 @@ async function copyContent(data) {
 }
 
 async function createConfig(data) {
-  const res = await fetch(`https://admin.hlx.page/config/${ORG}/sites/${data['school-name']}`, {
-    method: 'PUT',
+  const { token } = await DA_SDK;
+
+  const res = await fetch(`https://admin.hlx.page/config/${ORG}/sites/${data['school-name']}.json`, {
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
     },
     body: JSON.stringify({
       version: 1,
