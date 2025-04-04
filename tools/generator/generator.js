@@ -1,5 +1,4 @@
-// TODO update to da.live once https://github.com/da-sites/nexter/pull/31 is merged
-import 'https://main--nexter--hannessolo.aem.live/nx/public/sl/components.js';
+import 'https://da.live/nx/public/sl/components.js';
 import getStyle from 'https://da.live/nx/utils/styles.js';
 import { LitElement, html, nothing } from 'da-lit';
 import { createSite } from './create-site.js';
@@ -10,6 +9,7 @@ class Generator extends LitElement {
   static properties = {
     loading: { type: Boolean, state: true, attribute: false },
     error: { type: String, state: true, attribute: false },
+    message: { type: String, state: true, attribute: false },
   };
 
   constructor() {
@@ -28,10 +28,11 @@ class Generator extends LitElement {
     this.loading = true;
     const formData = new FormData(e.target.closest('form'));
     const data = Object.fromEntries(formData.entries());
-    createSite(data)
+    createSite(data, (message) => { this.message = message;})
       .then(() => { this.loading = false; })
       .catch((e) => {
         this.loading = false;
+        this.message = null;
         this.error = e.message;
       });
   }
@@ -45,7 +46,10 @@ class Generator extends LitElement {
           <sl-input type="text" name="principal-name" label="Principal's name"></sl-input>
           <sl-button ?disabled=${this.loading} @click=${this.onSubmit}>Create site</sl-button>
         </form>
-        ${this.error ? html`${this.error}` : nothing}
+        <div class="status">
+          ${this.error ? html`<p class="error">${this.error}</p>` : nothing}
+          ${this.message ? html`<p class="status">${this.message}</p>` : nothing}
+        </div>
       </div>
     `;
   }

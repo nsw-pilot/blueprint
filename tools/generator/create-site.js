@@ -1,6 +1,7 @@
 const ORG = 'nsw-pilot';
 const BLUEPRINT = 'blueprint';
 const COPY_FROM = `/${ORG}/${BLUEPRINT}/`;
+import { crawl } from 'https://da.live/nx/public/utils/tree.js';
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 
 async function copyContent(data) {
@@ -68,40 +69,73 @@ async function replaceTemplate(data) {
   }
 }
 
-async function publishPages(data) {
-  // start job
-  const res = await fetch(`https://admin.hlx.page/preview/${ORG}/${data['school-name']}/main/*`, {
-    method: 'POST',
-  });
-  if (!res.ok) {
-    throw new Error(`Failed to start bulk preview job: ${res.statusText}`);
+class ThrottledQueue {
+  constructor(callback, delay) {
+    this.callback = callback;
+    this.delay = delay;
+    this.queue = [];
+    this.isProcessing = false;
   }
 
-  const previewDetails = await res.json();
-  const job = previewDetails.job;
-  const jobStatusURL = `https://admin.hlx.page/job/${ORG}/${data['school-name']}/main/${job.topic}/${job.name}`;
+  async processQueue() {
+    if (this.queue.length === 0 || this.isProcessing) {
+      return;
+    }
 
-  // get status
-  let done = false;
-  do {
-    const res = await fetch(jobStatusURL);
-    if (!res.ok) {
-      throw new Error(`Failed to fetch job status: ${res.statusText}`);
+    this.isProcessing = true;
+    while (this.queue.length > 0) {
+      const nextItem = this.queue.shift();
+      this.callback(nextItem);
+      await new Promise(resolve => setTimeout(resolve, this.delay));
     }
-    const details = await res.json();
-    if (details.status === 'done') {
-      done = true;
-    } else if (details.status === 'failed') {
-      throw new Error(`Job failed: ${details.error}`);
-    } else {
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+    this.isProcessing = false;
+  }
+
+  add(item) {
+    this.queue.push(item);
+    this.processQueue();
+  }
+
+  async waitForComplete() {
+    while (this.queue.length > 0 || this.isProcessing) {
+      await new Promise(resolve => setTimeout(resolve, 200));
     }
-  } while (!done);
+  }
 }
 
-export async function createSite(data) {
+const failed = {}
+async function previewItem(url) {
+  await fetch(url, { method: 'POST' }).catch((e) => { failed[url] = e; });
+}
+
+const previewQueue = new ThrottledQueue(previewItem, 200);
+
+async function addToPreviewQueue(item, data) {
+  // remove org/site
+  const path = item.path.split('/').slice(3).join('/');
+  const url = `https://admin.hlx.page/preview/${ORG}/${data['school-name']}/main/${path}`;
+  previewQueue.add(url);
+}
+
+
+async function publishPages(data) {
+  const { results } = crawl({ path: `/${ORG}/${data['school-name']}`, callback: (item) => addToPreviewQueue(item, data) });
+  await results;
+  await previewQueue.waitForComplete();
+
+  if (Object.keys(failed).length) {
+    throw new Error(`Failed to publish pages: ${JSON.stringify(failed)}`);
+  }
+}
+
+export async function createSite(data, setMessage) {
+  setMessage('Copying content...');
   await copyContent(data);
+  setMessage('Templating content...');
   await replaceTemplate(data);
+  setMessage('Creating new site config...');
   await createConfig(data);
+  setMessage('Publishing pages...');
   await publishPages(data);
+  setMessage(`Done! Check out your new site at https://main--${data['school-name']}--${ORG}.aem.page`);
 }
