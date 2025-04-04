@@ -7,7 +7,7 @@ body {
 
 main {
   max-width: var(--grid-container-width);
-  margin: 72px auto 0 auto;
+  margin: 84px auto 0 auto;
 }
 
 picture {
@@ -25,5 +25,5 @@ picture {
 da-generator {
   display: block;
   position: relative;
-  max-width: 50%;
+  max-width: 40%;
 }

@@ -14,6 +14,8 @@ class Generator extends LitElement {
     return html`
       <div class="main-container">
         <h1>Create your site</h1>
+        <sl-input type="text" name="school-name" label="School name"></sl-input>
+        <sl-button>Create site</sl-button>
       </div>
     `;
   }
