@@ -26,4 +26,5 @@ da-generator {
   display: block;
   position: relative;
   max-width: 40%;
+  z-index: 10;
 }
