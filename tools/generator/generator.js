@@ -83,19 +83,19 @@ class Generator extends LitElement {
       <form>
         <div class="fieldgroup">
           <label>School name</label>
-          <sl-input type="text" value="My School" name="schoolName" placeholder="Add name"></sl-input>
+          <sl-input type="text" name="schoolName" placeholder="Add name"></sl-input>
         </div>
         <div class="fieldgroup">
           <label>School tagline</label>
-          <sl-textarea class="tagline" value="My Tagline" name="schoolTagline" resize="none" placeholder="Add tagline"></sl-textarea>
+          <sl-textarea class="tagline" name="schoolTagline" resize="none" placeholder="Add tagline"></sl-textarea>
         </div>
         <div class="fieldgroup">
           <label>Principal's name</label>
-          <sl-input type="text" value="Her name" name="principalName" placeholder="Enter name"></sl-input>
+          <sl-input type="text" name="principalName" placeholder="Enter name"></sl-input>
         </div>
         <div class="fieldgroup">
           <label>Principal's message</label>
-          <sl-textarea value="Her message" class="message" resize="none" name="principalMessage" placeholder="Enter message"></sl-textarea>
+          <sl-textarea class="message" resize="none" name="principalMessage" placeholder="Enter message"></sl-textarea>
         </div>
         <div class="form-footer">
           <div>
