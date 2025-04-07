@@ -1,4 +1,4 @@
-import{g as c}from"../chunks/aem-CkpPMh2a.js";async function i(r,t){let a=(await c()).searchurl;t!==""&&(a+=`&query=+${t}`);let n="<ol>";try{const e=await fetch(a);if(!e.ok)throw new Error(`HTTP error! Status: ${e.status}`);const o=await e.json();if(o.results.length===0){const s=`<div class="nsw-results-bar__info">Sorry, no results found for your search</div>
+import{g as c}from"../chunks/aem-DzghdSH4.js";async function i(r,t){let a=(await c()).searchurl;t!==""&&(a+=`&query=+${t}`);let n="<ol>";try{const e=await fetch(a);if(!e.ok)throw new Error(`HTTP error! Status: ${e.status}`);const o=await e.json();if(o.results.length===0){const s=`<div class="nsw-results-bar__info">Sorry, no results found for your search</div>
       <div class="error-message">
         <h4>Didn’t find what you were looking for?</h4>
         <ul>
