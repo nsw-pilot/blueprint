@@ -1,4 +1,4 @@
-import 'http://localhost:6456/nx/public/sl/components.js';
+import 'https://da.live/nx/public/sl/components.js';
 import getStyle from 'https://da.live/nx/utils/styles.js';
 import { LitElement, html, nothing } from 'da-lit';
 import { ORG, createSite } from './create-site.js';

@@ -1,5 +1,4 @@
 import { crawl } from 'https://da.live/nx/public/utils/tree.js';
-import { Queue } from 'https://da.live/nx/public/utils/tree.js';
 import DA_SDK from 'https://da.live/nx/utils/sdk.js';
 const { token } = await DA_SDK;
 
