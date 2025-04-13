@@ -33,50 +33,63 @@ async function getFacebookApiPath() {
 }
 
 async function fetchFacebookPosts() {
-  const fbApi = await getFacebookApiPath();
-
-  if (!fbApi) {
-    return null;
-  }
-
-  try {
-    const fbResponse = await fetch(fbApi, {
-      method: 'GET',
-      ...FB_HEADERS,
-    });
-
-    if (!fbResponse.ok) {
-      throw new Error(`Facebook API request failed: ${fbResponse.statusText}`);
-    }
-
-    const fbPosts = await fbResponse.json();
-
-    if (!fbPosts || !fbPosts.length || !fbPosts[0].posts) {
-      throw new Error('No Facebook posts found');
-    }
-
-    const posts = JSON.parse(fbPosts[0].posts);
-
-    const top3PostsWithImage = [];
-    for (let i = 0; i < posts.length; i += 1) {
-      const item = posts[i];
-      if (item.full_picture && item.message) {
-        top3PostsWithImage.push(item);
-        if (top3PostsWithImage.length === 3) break;
+  return new Promise((resolve) => {
+    // Resolve immediately with null to prevent blocking
+    resolve(null);
+    
+    // Start the fetch process asynchronously
+    (async () => {
+      const fbApi = await getFacebookApiPath();
+      
+      if (!fbApi) {
+        return;
       }
-    }
-
-    return top3PostsWithImage;
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('Error fetching Facebook API:', error);
-    return null;
-  }
+      
+      try {
+        const fbResponse = await fetch(fbApi, {
+          method: 'GET',
+          ...FB_HEADERS,
+        });
+        
+        if (!fbResponse.ok) {
+          throw new Error(`Facebook API request failed: ${fbResponse.statusText}`);
+        }
+        
+        const fbPosts = await fbResponse.json();
+        
+        if (!fbPosts || !fbPosts.length || !fbPosts[0].posts) {
+          throw new Error('No Facebook posts found');
+        }
+        
+        const posts = JSON.parse(fbPosts[0].posts);
+        
+        const top3PostsWithImage = [];
+        for (let i = 0; i < posts.length; i += 1) {
+          const item = posts[i];
+          if (item.full_picture && item.message) {
+            top3PostsWithImage.push(item);
+            if (top3PostsWithImage.length === 3) break;
+          }
+        }
+        
+        // Update the UI with the fetched posts
+        updateFacebookFeed(top3PostsWithImage);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('Error fetching Facebook API:', error);
+      }
+    })();
+  });
 }
 
-export default async function decorate(block) {
-  const fbPosts = await fetchFacebookPosts();
-  const fbPostsEl = fbPosts.map((post) => `<div class = 'nsw-col nsw-col-md-6 nsw-col-lg-4'>
+// New function to update the Facebook feed with posts
+function updateFacebookFeed(posts) {
+  if (!posts || !posts.length) return;
+  
+  const block = document.querySelector('.facebook-feed');
+  if (!block) return;
+  
+  const fbPostsEl = posts.map((post) => `<div class = 'nsw-col nsw-col-md-6 nsw-col-lg-4'>
       <div class = 'nsw-card nsw-card--highlight'>
         <div class="nsw-card__image">
         <img src="${post.full_picture}" alt="Facebook post image">
@@ -94,9 +107,30 @@ export default async function decorate(block) {
         </div>
       </div>
     </div>`);
+  
   const nswGrid = document.createElement('div');
   nswGrid.classList.add('nsw-grid');
   nswGrid.innerHTML = fbPostsEl.join('');
+  
+  // Clear and update the block
   block.textContent = '';
   block.append(nswGrid);
+}
+
+export default async function decorate(block) {
+  // Add a class to the block for easy identification
+  block.classList.add('facebook-feed');
+  
+  // Create a loading state or placeholder
+  const loadingEl = document.createElement('div');
+  loadingEl.classList.add('nsw-grid');
+  loadingEl.innerHTML = `<div class="nsw-col nsw-col-md-12">
+    <p>Loading Facebook posts...</p>
+  </div>`;
+  
+  block.textContent = '';
+  block.append(loadingEl);
+  
+  // Fetch posts asynchronously (this will return immediately)
+  await fetchFacebookPosts();
 }

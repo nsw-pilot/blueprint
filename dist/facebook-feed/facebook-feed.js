@@ -1,12 +1,12 @@
-/* empty css                      */import{g as i}from"../chunks/aem-DrEuio_w.js";const r="facebookapi",l="/src/blocks/facebook-feed/fbApi.json",d={headers:{Authorization:"Bearer ZmFjZWJvb2stc3dzLWF1dGhvcml6ZXItc3dzLWNsb3VkOktlbm5ldGhTV1M=","Content-Type":"application/json"}};async function h(){const t=window.location.hostname==="localhost";try{const s=await i();return t&&(!s||!s[r])?l:s[r]}catch(s){console.error("Error fetching placeholders:",s);return}}async function f(){const t=await h();if(!t)return null;try{const s=await fetch(t,{method:"GET",...d});if(!s.ok)throw new Error(`Facebook API request failed: ${s.statusText}`);const e=await s.json();if(!e||!e.length||!e[0].posts)throw new Error("No Facebook posts found");const a=JSON.parse(e[0].posts),o=[];for(let c=0;c<a.length;c+=1){const n=a[c];if(n.full_picture&&n.message&&(o.push(n),o.length===3))break}return o}catch(s){return console.error("Error fetching Facebook API:",s),null}}async function u(t){const e=(await f()).map(o=>`<div class = 'nsw-col nsw-col-md-6 nsw-col-lg-4'>
+/* empty css                      */import{g as d}from"../chunks/aem-DrEuio_w.js";const r="facebookapi",l="/src/blocks/facebook-feed/fbApi.json",f={headers:{Authorization:"Bearer ZmFjZWJvb2stc3dzLWF1dGhvcml6ZXItc3dzLWNsb3VkOktlbm5ldGhTV1M=","Content-Type":"application/json"}};async function h(){const o=window.location.hostname==="localhost";try{const e=await d();return o&&(!e||!e[r])?l:e[r]}catch(e){console.error("Error fetching placeholders:",e);return}}async function p(){return new Promise(o=>{o(null),(async()=>{const e=await h();if(e)try{const s=await fetch(e,{method:"GET",...f});if(!s.ok)throw new Error(`Facebook API request failed: ${s.statusText}`);const t=await s.json();if(!t||!t.length||!t[0].posts)throw new Error("No Facebook posts found");const n=JSON.parse(t[0].posts),c=[];for(let a=0;a<n.length;a+=1){const i=n[a];if(i.full_picture&&i.message&&(c.push(i),c.length===3))break}w(c)}catch(s){console.error("Error fetching Facebook API:",s)}})()})}function w(o){if(!o||!o.length)return;const e=document.querySelector(".facebook-feed");if(!e)return;const s=o.map(n=>`<div class = 'nsw-col nsw-col-md-6 nsw-col-lg-4'>
       <div class = 'nsw-card nsw-card--highlight'>
         <div class="nsw-card__image">
-        <img src="${o.full_picture}" alt="Facebook post image">
+        <img src="${n.full_picture}" alt="Facebook post image">
         </div>
         <div class="nsw-card__content">
           <div class="nsw-card__copy">
             <p>
-              <a href='https://www.facebook.com/${o.id}'>${o.message}</a>
+              <a href='https://www.facebook.com/${n.id}'>${n.message}</a>
             </p>
           </div>
           <div class='card-icon'>
@@ -15,5 +15,7 @@
           <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">east</span>
         </div>
       </div>
-    </div>`),a=document.createElement("div");a.classList.add("nsw-grid"),a.innerHTML=e.join(""),t.textContent="",t.append(a)}export{u as default};
+    </div>`),t=document.createElement("div");t.classList.add("nsw-grid"),t.innerHTML=s.join(""),e.textContent="",e.append(t)}async function g(o){o.classList.add("facebook-feed");const e=document.createElement("div");e.classList.add("nsw-grid"),e.innerHTML=`<div class="nsw-col nsw-col-md-12">
+    <p>Loading Facebook posts...</p>
+  </div>`,o.textContent="",o.append(e),await p()}export{g as default};
 //# sourceMappingURL=facebook-feed.js.map
