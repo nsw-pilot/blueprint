@@ -1,21 +1,22 @@
-import 'nsw-design-system/src/components/card/_card.scss';
-import { fetchPlaceholders } from '../../scripts/aem.js';
-import './facebook-feed.scss';
+import "nsw-design-system/src/components/card/_card.scss";
+import { fetchPlaceholders } from "../../scripts/aem.js";
+import "./facebook-feed.scss";
 
-const FB_PLACEHOLDER_KEY = 'facebookapi';
-const LOCAL_DUMMY_JSON = '/src/blocks/facebook-feed/fbApi.json';
+const FB_PLACEHOLDER_KEY = "facebookapi";
+const LOCAL_DUMMY_JSON = "/src/blocks/facebook-feed/fbApi.json";
 
-// The API temporarily requires a bearer token to access the Facebook API.
-// In the future, it will require no authentication
+// This is a public API that temporarily requires a bearer token to access the Facebook API.
+// In the future, it will require no token at all.
 const FB_HEADERS = {
   headers: {
-    Authorization: 'Bearer ZmFjZWJvb2stc3dzLWF1dGhvcml6ZXItc3dzLWNsb3VkOktlbm5ldGhTV1M=',
-    'Content-Type': 'application/json',
+    Authorization:
+      "Bearer ZmFjZWJvb2stc3dzLWF1dGhvcml6ZXItc3dzLWNsb3VkOktlbm5ldGhTV1M=",
+    "Content-Type": "application/json",
   },
 };
 
 async function getFacebookApiPath() {
-  const isLocalhost = window.location.hostname === 'localhost';
+  const isLocalhost = window.location.hostname === "localhost";
 
   try {
     const response = await fetchPlaceholders();
@@ -27,42 +28,44 @@ async function getFacebookApiPath() {
     return response[FB_PLACEHOLDER_KEY];
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('Error fetching placeholders:', error);
+    console.error("Error fetching placeholders:", error);
     return undefined;
   }
 }
 
-async function fetchFacebookPosts() {
+async function fetchFacebookPosts(block) {
   return new Promise((resolve) => {
     // Resolve immediately with null to prevent blocking
     resolve(null);
-    
+
     // Start the fetch process asynchronously
     (async () => {
       const fbApi = await getFacebookApiPath();
-      
+
       if (!fbApi) {
         return;
       }
-      
+
       try {
         const fbResponse = await fetch(fbApi, {
-          method: 'GET',
+          method: "GET",
           ...FB_HEADERS,
         });
-        
+
         if (!fbResponse.ok) {
-          throw new Error(`Facebook API request failed: ${fbResponse.statusText}`);
+          throw new Error(
+            `Facebook API request failed: ${fbResponse.statusText}`
+          );
         }
-        
+
         const fbPosts = await fbResponse.json();
-        
+
         if (!fbPosts || !fbPosts.length || !fbPosts[0].posts) {
-          throw new Error('No Facebook posts found');
+          throw new Error("No Facebook posts found");
         }
-        
+
         const posts = JSON.parse(fbPosts[0].posts);
-        
+
         const top3PostsWithImage = [];
         for (let i = 0; i < posts.length; i += 1) {
           const item = posts[i];
@@ -71,25 +74,23 @@ async function fetchFacebookPosts() {
             if (top3PostsWithImage.length === 3) break;
           }
         }
-        
+
         // Update the UI with the fetched posts
-        updateFacebookFeed(top3PostsWithImage);
+        updateFacebookFeed(top3PostsWithImage, block);
       } catch (error) {
         // eslint-disable-next-line no-console
-        console.error('Error fetching Facebook API:', error);
+        console.error("Error fetching Facebook API:", error);
       }
     })();
   });
 }
 
 // New function to update the Facebook feed with posts
-function updateFacebookFeed(posts) {
-  if (!posts || !posts.length) return;
-  
-  const block = document.querySelector('.facebook-feed');
-  if (!block) return;
-  
-  const fbPostsEl = posts.map((post) => `<div class = 'nsw-col nsw-col-md-6 nsw-col-lg-4'>
+function updateFacebookFeed(posts, block) {
+  if (!posts || !posts.length || !block) return;
+
+  const fbPostsEl = posts.map(
+    (post) => `<div class = 'nsw-col nsw-col-md-6 nsw-col-lg-4'>
       <div class = 'nsw-card nsw-card--highlight'>
         <div class="nsw-card__image">
         <img src="${post.full_picture}" alt="Facebook post image">
@@ -106,31 +107,28 @@ function updateFacebookFeed(posts) {
           <span class="material-icons nsw-material-icons" focusable="false" aria-hidden="true">east</span>
         </div>
       </div>
-    </div>`);
-  
-  const nswGrid = document.createElement('div');
-  nswGrid.classList.add('nsw-grid');
-  nswGrid.innerHTML = fbPostsEl.join('');
-  
+    </div>`
+  );
+
+  const nswGrid = document.createElement("div");
+  nswGrid.classList.add("nsw-grid");
+  nswGrid.innerHTML = fbPostsEl.join("");
+
   // Clear and update the block
-  block.textContent = '';
+  block.textContent = "";
   block.append(nswGrid);
 }
 
 export default async function decorate(block) {
-  // Add a class to the block for easy identification
-  block.classList.add('facebook-feed');
-  
-  // Create a loading state or placeholder
-  const loadingEl = document.createElement('div');
-  loadingEl.classList.add('nsw-grid');
+  // Create a loading state
+  const loadingEl = document.createElement("div");
+  loadingEl.classList.add("nsw-grid");
   loadingEl.innerHTML = `<div class="nsw-col nsw-col-md-12">
     <p>Loading Facebook posts...</p>
   </div>`;
-  
-  block.textContent = '';
+
+  block.textContent = "";
   block.append(loadingEl);
-  
-  // Fetch posts asynchronously (this will return immediately)
-  await fetchFacebookPosts();
+
+  await fetchFacebookPosts(block);
 }
