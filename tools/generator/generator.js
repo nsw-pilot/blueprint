@@ -1,9 +1,25 @@
 import 'https://da.live/nx/public/sl/components.js';
 import getStyle from 'https://da.live/nx/utils/styles.js';
 import { LitElement, html, nothing } from 'da-lit';
-import { ORG, createSite } from './create-site.js';
+import { ORG, createSite, listPlaceholders } from './create-site.js';
 
 const style = await getStyle(import.meta.url);
+const placeholders = (await listPlaceholders()).map((item) => ({
+  label: item.name,
+  value: item.path,
+}));
+const blueprints = [{label: 'Blueprint', value: '/nsw-pilot/blueprint'}];
+
+const onOpenPlaceholder = (item) => {
+  const url = `https://da.live/sheet#${item.value}`;
+  window.open(url, url);
+}
+
+const onOpenBlueprint = (item) => {
+  const url = `https://da.live/#${item.value}`;
+  window.open(url, url);
+}
+
 
 class Generator extends LitElement {
   static properties = {
@@ -40,7 +56,7 @@ class Generator extends LitElement {
     const getTime = setInterval(() => {
       this._time = this.calculateCrawlTime(startTime);
     }, 100);
-    
+
     this._data = {
       ...entries,
       siteName: entries.schoolName.replaceAll(/[^a-zA-Z0-9]/g, '-').toLowerCase(),
@@ -51,10 +67,12 @@ class Generator extends LitElement {
     try {
       await createSite(this._data, setStatus);
     } catch (e) {
-      this._status = e;
+      this._status = ({ type: 'error', message: e.message });
+      throw e;
+    } finally {
+      clearTimeout(getTime);
     }
 
-    clearTimeout(getTime);
     this._status = { type: 'success', message: `Site created in ${this.calculateCrawlTime(startTime)}.` };
   }
 
@@ -78,6 +96,26 @@ class Generator extends LitElement {
     `;
   }
 
+  renderRadioItems(items, name, onOpen) {
+    return html`
+      <div class="grid-list">
+        <input type="hidden" name="${name}" value="" />
+        ${items.map((item, i) =>
+            html`
+              <div class="grid-list-item">
+                <input id="${name}-${i}" type="radio" name="${name}" value="${item.value}" />
+                <label for="${name}-${i}">${item.label}</label>
+                <button @click="${(e) => {
+                  e.preventDefault();
+                  onOpen(item);
+                }}"><img src="https://da.live/nx/public/icons/S2_Icon_OpenIn_20_N.svg" /></button>
+              </div>
+            `
+        )}
+      </div>
+    `;
+  }
+
   renderForm() {
     return html`
       <form>
@@ -86,16 +124,12 @@ class Generator extends LitElement {
           <sl-input type="text" name="schoolName" placeholder="Add name"></sl-input>
         </div>
         <div class="fieldgroup">
-          <label>School tagline</label>
-          <sl-textarea class="tagline" name="schoolTagline" resize="none" placeholder="Add tagline"></sl-textarea>
+          <label>Select site blueprint</label>
+          ${this.renderRadioItems(blueprints, 'blueprint', onOpenBlueprint)}
         </div>
         <div class="fieldgroup">
-          <label>Principal's name</label>
-          <sl-input type="text" name="principalName" placeholder="Enter name"></sl-input>
-        </div>
-        <div class="fieldgroup">
-          <label>Principal's message</label>
-          <sl-textarea class="message" resize="none" name="principalMessage" placeholder="Enter message"></sl-textarea>
+          <label>Select placeholders file</label>
+          ${this.renderRadioItems(placeholders, 'placeholder', onOpenPlaceholder)}
         </div>
         <div class="form-footer">
           <div>
