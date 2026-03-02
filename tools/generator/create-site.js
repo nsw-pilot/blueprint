@@ -101,7 +101,7 @@ async function copyContent(data) {
 
   formData.set('destination', `/${ORG}/${data.siteName}`);
 
-  const opts = {  method: 'POST', body: formData, headers: HEADERS };
+  const opts = {  method: 'POST', body: formData, headers: { 'Authorization': `Bearer ${token}` } };
 
   // TODO: Remove force delete. Copying tree doesn't seem to work
   const del = await fetch(`${DA_ORIGIN}/source${destination}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
