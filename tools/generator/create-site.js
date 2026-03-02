@@ -5,9 +5,13 @@ const { token } = await DA_SDK;
 const DA_ORIGIN = 'https://admin.da.live';
 const AEM_ORIGIN = 'https://admin.hlx.page';
 
+const AUTH_HEADERS = {
+  'Authorization': `Bearer ${token}`,
+};
+
 const HEADERS = {
   'Content-Type': 'application/json',
-  'Authorization': `Bearer ${token}`,
+  ...AUTH_HEADERS,
 };
 
 export const ORG = 'nsw-pilot';
@@ -50,7 +54,7 @@ async function replaceTemplate(data) {
     const daPath = `https://admin.da.live/source/${ORG}/${data.siteName}${path}`;
 
     // get index
-    const indexRes = await fetch(daPath);
+    const indexRes = await fetch(daPath, { headers: AUTH_HEADERS });
     if (!indexRes.ok) throw new Error(`Failed to fetch index.html: ${indexRes.statusText}`);
 
     // replace template values
@@ -66,7 +70,7 @@ async function replaceTemplate(data) {
     const formData = new FormData();
     const blob = new Blob([templatedText], { type: 'text/html' });
     formData.set('data', blob);
-    const updateRes = await fetch(daPath, { method: 'POST', body: formData });
+    const updateRes = await fetch(daPath, { method: 'POST', body: formData, headers: AUTH_HEADERS });
     if (!updateRes.ok) {
       throw new Error(`Failed to update index.html: ${updateRes.statusText}`);
     }
@@ -78,7 +82,7 @@ async function previewOrPublishPages(data, action, setStatus) {
 
   const label = action === 'preview' ? 'Previewing' : 'Publishing';
 
-  const opts = { method: 'POST', headers: { Authorization: `Bearer ${token}` } };
+  const opts = { method: 'POST', headers: AUTH_HEADERS };
 
   const callback = async (item) => {
     if (item.path.endsWith('.svg') || item.path.endsWith('.png') || item.path.endsWith('.jpg')) return;
@@ -101,10 +105,10 @@ async function copyContent(data) {
 
   formData.set('destination', `/${ORG}/${data.siteName}`);
 
-  const opts = {  method: 'POST', body: formData, headers: { 'Authorization': `Bearer ${token}` } };
+  const opts = { method: 'POST', body: formData, headers: AUTH_HEADERS };
 
   // TODO: Remove force delete. Copying tree doesn't seem to work
-  const del = await fetch(`${DA_ORIGIN}/source${destination}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
+  const del = await fetch(`${DA_ORIGIN}/source${destination}`, { method: 'DELETE', headers: AUTH_HEADERS });
 
   const res = await fetch(`${DA_ORIGIN}/copy${COPY_FROM}`, opts);
 
