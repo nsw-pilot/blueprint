@@ -52,6 +52,8 @@ class Generator extends LitElement {
       await createSite(this._data, setStatus);
     } catch (e) {
       this._status = e;
+      clearTimeout(getTime);
+      return;
     }
 
     clearTimeout(getTime);
